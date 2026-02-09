@@ -39,6 +39,7 @@ Register Employee | WRAD
         <h3 style="margin-top:10px;">Personal Information</h3>
 
         <div class="form-grid">
+
             <div class="form-group">
                 <label>Employee Name</label>
                 {{ form.employee_name }}
@@ -83,12 +84,14 @@ Register Employee | WRAD
                 <label>Permanent Address</label>
                 {{ form.permanent_address }}
             </div>
+
         </div>
 
         <!-- ================= OFFICIAL INFORMATION ================= -->
         <h3 style="margin-top:26px;">Official Information</h3>
 
         <div class="form-grid">
+
             <div class="form-group">
                 <label>Designation</label>
                 {{ form.designation }}
@@ -109,9 +112,21 @@ Register Employee | WRAD
                 {{ form.reporting_role }}
             </div>
 
+            <!-- ===== REPORTING PERSON (ROLE-AWARE) ===== -->
             <div class="form-group">
                 <label>Reporting Person</label>
-                {{ form.reporting_person }}
+
+                <select name="reporting_person" id="id_reporting_person">
+                    <option value="">---------</option>
+                    {% for emp in form.fields.reporting_person.queryset %}
+                        <option
+                            value="{{ emp.id }}"
+                            data-role="{{ emp.designation }}"
+                        >
+                            {{ emp.employee_name }} ({{ emp.employee_id }})
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="form-group">
@@ -123,6 +138,12 @@ Register Employee | WRAD
                 <label>Ending Date</label>
                 {{ form.ending_date }}
             </div>
+
+            <div class="form-group">
+                <label>Employment Status</label>
+                {{ form.employment_status }}
+            </div>
+
         </div>
 
         <!-- ================= ACTIONS ================= -->
@@ -134,6 +155,42 @@ Register Employee | WRAD
                 Cancel
             </a>
         </div>
+
+        <!-- ================= ROLE → PERSON FILTER LOGIC ================= -->
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const roleSelect = document.getElementById("id_reporting_role");
+            const personSelect = document.getElementById("id_reporting_person");
+
+            if (!roleSelect || !personSelect) return;
+
+            function filterReportingPersons() {
+                const selectedRole = roleSelect.value;
+
+                Array.from(personSelect.options).forEach(option => {
+                    if (!option.value) {
+                        option.hidden = false;
+                        return;
+                    }
+
+                    const role = option.dataset.role;
+                    option.hidden = role !== selectedRole;
+                });
+
+                // Reset invalid selection
+                if (
+                    personSelect.selectedOptions.length &&
+                    personSelect.selectedOptions[0].hidden
+                ) {
+                    personSelect.value = "";
+                }
+            }
+
+            roleSelect.addEventListener("change", filterReportingPersons);
+            filterReportingPersons();
+        });
+        </script>
 
     </form>
 
