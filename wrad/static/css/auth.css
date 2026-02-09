@@ -1,0 +1,147 @@
+/* ================= AUTH PAGES ================= */
+
+body {
+    margin: 0;
+    background-color: #f1f5f9;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    color: #111827;
+}
+
+/* ================= AUTH CONTAINER ================= */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: #ffffff;
+    padding: 28px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ================= HEADER ================= */
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.auth-header h1 {
+    font-size: 22px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.auth-header p {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* ================= FORM ================= */
+
+.auth-form {
+    width: 100%;
+}
+
+.auth-form .form-group {
+    margin-bottom: 16px;
+}
+
+.auth-form label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+    color: #374151;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 11px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+}
+
+/* ================= PASSWORD FIELD ================= */
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 42px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #6b7280;
+    user-select: none;
+}
+
+.password-toggle:hover {
+    color: #2563eb;
+}
+
+/* ================= ACTIONS ================= */
+
+.auth-actions {
+    margin-top: 22px;
+}
+
+.auth-actions .btn {
+    width: 100%;
+    padding: 11px;
+    font-size: 15px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* ================= ALERTS ================= */
+
+.alert {
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.alert-error,
+.alert-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+/* ================= FOOTER ================= */
+
+.auth-footer {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #6b7280;
+}

@@ -1,0 +1,138 @@
+{% extends "layouts/base_admin.html" %}
+
+{% block title %}
+Edit Employee | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Edit Employee</h1>
+    <span class="badge">
+        Admin Action
+    </span>
+</div>
+
+<p class="subtitle">
+    Update employee information based on role-based access rules.
+    All changes are logged for audit purposes.
+</p>
+
+<!-- ================= EMPLOYEE INFO ================= -->
+<div class="card">
+
+    <h3>Employee Overview</h3>
+
+    <div class="form-grid">
+        <div class="info-block">
+            <span class="label">Employee ID</span>
+            <span class="value strong">
+                {{ employee.employee_id }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Employee Name</span>
+            <span class="value">
+                {{ employee.employee_name }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Designation</span>
+            <span class="value">
+                {{ employee.designation }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Department</span>
+            <span class="value">
+                {{ employee.department }}
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= EDIT FORM ================= -->
+<div class="card">
+
+    <h3>Editable Fields</h3>
+
+    <!-- ===== FORM ERRORS ===== -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Update failed:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                {{ form.contact_number }}
+            </div>
+
+            <div class="form-group">
+                <label>Emergency Contact</label>
+                {{ form.emergency_contact_number }}
+            </div>
+
+            <div class="form-group full-width">
+                <label>Residential Address</label>
+                {{ form.residential_address }}
+            </div>
+
+            <div class="form-group full-width">
+                <label>Permanent Address</label>
+                {{ form.permanent_address }}
+            </div>
+
+            <div class="form-group">
+                <label>Client</label>
+                {{ form.client }}
+            </div>
+
+            <div class="form-group">
+                <label>Department</label>
+                {{ form.department }}
+            </div>
+
+            <div class="form-group">
+                <label>Designation</label>
+                {{ form.designation }}
+            </div>
+
+        </div>
+
+        <!-- ================= ADMIN COMMENT ================= -->
+        <div class="form-group" style="margin-top:16px;">
+            <label>Admin Comment (optional)</label>
+            <textarea
+                name="admin_comment"
+                rows="3"
+                placeholder="Reason for change (optional)"
+            ></textarea>
+        </div>
+
+        <!-- ================= ACTIONS ================= -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Save Changes
+            </button>
+            <a href="{% url 'admin_home' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

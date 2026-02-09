@@ -1,0 +1,163 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+My Profile | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>My Profile</h1>
+    <span class="badge">
+        Read-Only
+    </span>
+</div>
+
+<p class="subtitle">
+    This page displays your personal and official information.
+    Editing is restricted in Phase-1.
+</p>
+
+<!-- ================= PROFILE CARD ================= -->
+<div class="card">
+
+    <h3>Personal Information</h3>
+
+    <div class="form-grid">
+        <div class="info-block">
+            <span class="label">Employee ID</span>
+            <span class="value strong">
+                {{ employee.employee_id }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Employee Name</span>
+            <span class="value">
+                {{ employee.employee_name }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Date of Birth</span>
+            <span class="value">
+                {{ employee.date_of_birth }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Blood Group</span>
+            <span class="value">
+                {{ employee.blood_group }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Marital Status</span>
+            <span class="value">
+                {{ employee.marital_status }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Email</span>
+            <span class="value">
+                {{ employee.email_address }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Contact Number</span>
+            <span class="value">
+                {{ employee.contact_number }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Emergency Contact</span>
+            <span class="value">
+                {{ employee.emergency_contact_number }}
+            </span>
+        </div>
+
+        <div class="info-block full-width">
+            <span class="label">Residential Address</span>
+            <span class="value">
+                {{ employee.residential_address }}
+            </span>
+        </div>
+
+        <div class="info-block full-width">
+            <span class="label">Permanent Address</span>
+            <span class="value">
+                {{ employee.permanent_address }}
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= OFFICIAL DETAILS ================= -->
+<div class="card">
+
+    <h3>Official Information</h3>
+
+    <div class="form-grid">
+        <div class="info-block">
+            <span class="label">Designation</span>
+            <span class="value">
+                {{ employee.designation }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Department</span>
+            <span class="value">
+                {{ employee.department }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Client</span>
+            <span class="value">
+                {{ employee.client }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Reporting Role</span>
+            <span class="value">
+                {{ employee.reporting_role }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Reporting Person</span>
+            <span class="value">
+                {% if employee.reporting_person %}
+                    {{ employee.reporting_person.employee_name }}
+                {% else %}
+                    —
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Joining Date</span>
+            <span class="value">
+                {{ employee.joining_date }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Ending Date</span>
+            <span class="value">
+                {{ employee.ending_date|default:"—" }}
+            </span>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

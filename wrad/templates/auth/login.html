@@ -1,0 +1,81 @@
+{% extends "layouts/base_auth.html" %}
+{% load static %}
+
+{% block title %}
+Login | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= LOGIN FORM ================= -->
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <!-- ===== LOGIN HEADER ===== -->
+    <div style="text-align:center; margin-bottom:20px;">
+        <h2>Sign in to WRAD</h2>
+        <p class="subtitle">
+            Use your official credentials to continue
+        </p>
+    </div>
+
+    <!-- ===== USERNAME ===== -->
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            autocomplete="username"
+        >
+    </div>
+
+    <!-- ===== PASSWORD ===== -->
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            autocomplete="current-password"
+        >
+    </div>
+
+    <!-- ===== LOGIN MODE ===== -->
+    <div class="form-group">
+        <label for="login_as">Login As</label>
+        <select
+            name="login_as"
+            id="login_as"
+            required
+        >
+            <option value="" disabled selected>
+                Select access mode
+            </option>
+            <option value="user">
+                Employee
+            </option>
+            <option value="admin">
+                Admin / Management
+            </option>
+        </select>
+    </div>
+
+    <!-- ===== ACTIONS ===== -->
+    <div class="form-actions">
+        <button
+            type="submit"
+            class="btn btn-primary"
+            style="width:100%;"
+        >
+            Login
+        </button>
+    </div>
+
+</form>
+
+{% endblock %}

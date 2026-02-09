@@ -1,0 +1,117 @@
+{% extends "layouts/base_admin.html" %}
+
+{% block title %}
+Admin Dashboard | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Employee Dashboard</h1>
+
+    {% if is_management %}
+        <span class="badge">
+            Management View
+        </span>
+    {% else %}
+        <span class="badge">
+            Admin View
+        </span>
+    {% endif %}
+</div>
+
+<p class="subtitle">
+    Manage employee records, access credentials, and audit activity.
+</p>
+
+<!-- ================= EMPLOYEE LIST ================= -->
+<div class="card">
+
+    <h3>Employees</h3>
+
+    {% if employees %}
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp.employee_id }}</td>
+                    <td>{{ emp.employee_name }}</td>
+                    <td>{{ emp.designation }}</td>
+                    <td>{{ emp.department }}</td>
+                    <td>
+                        {% if emp.is_deleted %}
+                            <span class="status status-inactive">
+                                Deactivated
+                            </span>
+                        {% else %}
+                            <span class="status status-active">
+                                Active
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+
+                        <!-- Edit -->
+                        <a
+                            href="{% url 'edit_employee' emp.employee_id %}"
+                            class="btn btn-secondary"
+                            style="margin-right:6px;"
+                        >
+                            Edit
+                        </a>
+
+                        <!-- Management-only actions -->
+                        {% if is_management %}
+
+                            {% if emp.is_deleted %}
+                                <form
+                                    method="post"
+                                    action="{% url 'restore_employee' emp.employee_id %}"
+                                    style="display:inline;"
+                                >
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">
+                                        Restore
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form
+                                    method="post"
+                                    action="{% url 'deactivate_employee' emp.employee_id %}"
+                                    style="display:inline;"
+                                >
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        Deactivate
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="subtitle">
+            No employees found.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

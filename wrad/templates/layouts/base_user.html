@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}WRAD – Employee Dashboard{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Core Design System -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <div class="header-left header-logo">
+    <img src="{% static 'images/icon.png' %}" alt="WRAD Logo">
+    </div>
+
+    <div class="header-right">
+        {% if employee %}
+            <span class="user-role">
+                {{ employee.designation }}
+            </span>
+        {% endif %}
+        <a href="{% url 'logout' %}" class="logout-link">
+            Logout
+        </a>
+    </div>
+</header>
+
+<!-- ================= LAYOUT ================= -->
+<div class="container">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <h3>Workspace</h3>
+        <ul>
+            <li>
+                <a href="{% url 'user_home' %}">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'update_profile' %}">
+                    My Profile
+                </a>
+            </li>
+        </ul>
+
+        <h3>Tasks</h3>
+        <ul>
+            <li>
+                <a href="{% url 'my_tasks' %}">
+                    My Tasks
+                </a>
+            </li>
+
+            {% if can_manage_tasks %}
+            <li>
+                <a href="{% url 'task_manage' %}">
+                    Assign Tasks
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <h3>Leave</h3>
+        <ul>
+            <li>
+                <a href="{% url 'apply_leave' %}">
+                    Apply Leave
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'leave_approvals' %}">
+                    Leave Approvals
+                </a>
+            </li>
+        </ul>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="content">
+
+        <!-- ===== FLASH MESSAGES ===== -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- ===== PAGE CONTENT ===== -->
+        {% block content %}{% endblock %}
+
+    </main>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    © 2026 WRAD. All rights reserved.
+</footer>
+
+</body>
+</html>

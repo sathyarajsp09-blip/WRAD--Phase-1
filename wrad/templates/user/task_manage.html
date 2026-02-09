@@ -1,0 +1,113 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+Assign Tasks | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Assign Tasks</h1>
+    <span class="badge">
+        Assignor View
+    </span>
+</div>
+
+<p class="subtitle">
+    Create and manage tasks for your direct reporting team members.
+</p>
+
+<!-- ================= TASK CREATION ================= -->
+<div class="card">
+
+    <h3>Create New Task</h3>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Submission failed:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group full-width">
+                <label>Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                <label>Assigned To</label>
+                {{ form.assigned_to }}
+            </div>
+
+            <div class="form-group">
+                <label>Priority</label>
+                {{ form.priority }}
+            </div>
+
+            <div class="form-group">
+                <label>Due Date</label>
+                {{ form.due_date }}
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Assign Task
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- ================= ASSIGNED TASKS ================= -->
+<div class="card">
+
+    <h3>Tasks Assigned by You</h3>
+
+    {% if tasks %}
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Assigned To</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.assigned_to.employee_name }}</td>
+                    <td>
+                        <span class="status">
+                            {{ task.status }}
+                        </span>
+                    </td>
+                    <td>{{ task.progress_percent }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="subtitle">
+            You have not assigned any tasks yet.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

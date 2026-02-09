@@ -1,0 +1,141 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+Dashboard | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <span class="badge">
+        Overview
+    </span>
+</div>
+
+<p class="subtitle welcome-text">
+    Welcome <strong>{{ employee.employee_name }}</strong>  
+    Here’s a quick overview of your tasks and leave activity.
+</p>
+
+<!-- ================= ROW 1: SUMMARY CARDS ================= -->
+<div class="form-grid">
+
+    <div class="info-block">
+        <span class="label">Active Tasks</span>
+        <span class="value strong">
+            {{ active_tasks_count }}
+        </span>
+    </div>
+
+    <div class="info-block">
+        <span class="label">Completed Tasks</span>
+        <span class="value strong">
+            {{ completed_tasks_count }}
+        </span>
+    </div>
+
+    <div class="info-block">
+        <span class="label">Leaves Taken</span>
+        <span class="value strong">
+            {{ approved_leaves_count }}
+        </span>
+    </div>
+
+    <div class="info-block">
+        <span class="label">Pending Leaves</span>
+        <span class="value strong">
+            {{ pending_leaves_count }}
+        </span>
+    </div>
+
+</div>
+
+<!-- ================= ROW 2: MY TASKS PREVIEW ================= -->
+<div class="card">
+
+    <h3>My Tasks</h3>
+
+    {% if recent_tasks %}
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in recent_tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>
+                        <span class="status">
+                            {{ task.status }}
+                        </span>
+                    </td>
+                    <td>{{ task.progress_percent }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="form-actions">
+            <a href="{% url 'my_tasks' %}" class="btn btn-secondary">
+                View All Tasks
+            </a>
+        </div>
+    {% else %}
+        <p class="subtitle">
+            No tasks assigned yet.
+        </p>
+    {% endif %}
+
+</div>
+
+<!-- ================= ROW 3: MY LEAVE ACTIVITY ================= -->
+<div class="card">
+
+    <h3>My Leave Activity</h3>
+
+    {% if recent_leaves %}
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Leave Type</th>
+                    <th>Dates</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in recent_leaves %}
+                <tr>
+                    <td>{{ leave.leave_type }}</td>
+                    <td>
+                        {{ leave.start_date }} → {{ leave.end_date }}
+                    </td>
+                    <td>
+                        <span class="status">
+                            {{ leave.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="form-actions">
+            <a href="{% url 'apply_leave' %}" class="btn btn-secondary">
+                Go to Leave Page
+            </a>
+        </div>
+    {% else %}
+        <p class="subtitle">
+            No leave activity yet.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

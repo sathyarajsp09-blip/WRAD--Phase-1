@@ -1,0 +1,67 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+My Tasks | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>My Tasks</h1>
+    <span class="badge">
+        Assignee View
+    </span>
+</div>
+
+<p class="subtitle">
+    Tasks assigned to you. Click a task to view details and post updates.
+</p>
+
+<!-- ================= TASK CARDS ================= -->
+{% if tasks %}
+<div class="form-grid">
+
+    {% for task in tasks %}
+    <div class="card task-card">
+
+        <!-- ===== HEADER ===== -->
+        <div class="task-card-header">
+            <h3>{{ task.title }}</h3>
+            <span class="status status-{{ task.status|lower }}">
+                {{ task.status }}
+            </span>
+        </div>
+
+        <!-- ===== META ===== -->
+        <p class="subtitle">
+            Assigned by {{ task.assigned_by.employee_name }}
+        </p>
+
+        <!-- ===== PROGRESS ===== -->
+        <div class="task-progress">
+            <span>Progress</span>
+            <strong>{{ task.progress_percent }}%</strong>
+        </div>
+
+        <!-- ===== ACTION ===== -->
+        <div class="form-actions">
+            <a
+                href="{% url 'update_task' task.id %}"
+                class="btn btn-secondary"
+            >
+                Open Task
+            </a>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+{% else %}
+<p class="subtitle">
+    You currently have no assigned tasks.
+</p>
+{% endif %}
+
+{% endblock %}

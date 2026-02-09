@@ -1,0 +1,64 @@
+{% extends "layouts/base_admin.html" %}
+
+{% block title %}
+Employee Logs | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Employee Activity Logs</h1>
+    <span class="badge">
+        Audit View
+    </span>
+</div>
+
+<p class="subtitle">
+    System-generated audit trail for employee-related actions.
+    Logs are immutable and ordered by most recent activity.
+</p>
+
+<!-- ================= LOG TABLE ================= -->
+<div class="card">
+
+    <h3>Audit Logs</h3>
+
+    {% if logs %}
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Employee</th>
+                    <th>Employee ID</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>
+                        {{ log.created_at|date:"Y-m-d H:i:s" }}
+                    </td>
+                    <td>
+                        {{ log.employee.employee_name }}
+                    </td>
+                    <td>
+                        {{ log.employee.employee_id }}
+                    </td>
+                    <td>
+                        {{ log.action }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="subtitle">
+            No activity logs found.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

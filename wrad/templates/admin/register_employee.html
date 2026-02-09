@@ -1,0 +1,142 @@
+{% extends "layouts/base_admin.html" %}
+
+{% block title %}
+Register Employee | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Register Employee</h1>
+    <span class="badge">
+        Admin Action
+    </span>
+</div>
+
+<p class="subtitle">
+    Enter personal and official information to create a new employee record.
+    Login credentials will be created in a separate step.
+</p>
+
+<!-- ================= FORM CARD ================= -->
+<div class="card">
+
+    <h3>Employee Registration</h3>
+
+    <!-- ===== FORM ERRORS ===== -->
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Submission failed:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- ================= PERSONAL INFORMATION ================= -->
+        <h3 style="margin-top:10px;">Personal Information</h3>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Employee Name</label>
+                {{ form.employee_name }}
+            </div>
+
+            <div class="form-group">
+                <label>Date of Birth</label>
+                {{ form.date_of_birth }}
+            </div>
+
+            <div class="form-group">
+                <label>Blood Group</label>
+                {{ form.blood_group }}
+            </div>
+
+            <div class="form-group">
+                <label>Marital Status</label>
+                {{ form.marital_status }}
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                {{ form.email_address }}
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                {{ form.contact_number }}
+            </div>
+
+            <div class="form-group">
+                <label>Emergency Contact</label>
+                {{ form.emergency_contact_number }}
+            </div>
+
+            <div class="form-group full-width">
+                <label>Residential Address</label>
+                {{ form.residential_address }}
+            </div>
+
+            <div class="form-group full-width">
+                <label>Permanent Address</label>
+                {{ form.permanent_address }}
+            </div>
+        </div>
+
+        <!-- ================= OFFICIAL INFORMATION ================= -->
+        <h3 style="margin-top:26px;">Official Information</h3>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Designation</label>
+                {{ form.designation }}
+            </div>
+
+            <div class="form-group">
+                <label>Department</label>
+                {{ form.department }}
+            </div>
+
+            <div class="form-group">
+                <label>Client</label>
+                {{ form.client }}
+            </div>
+
+            <div class="form-group">
+                <label>Reporting Role</label>
+                {{ form.reporting_role }}
+            </div>
+
+            <div class="form-group">
+                <label>Reporting Person</label>
+                {{ form.reporting_person }}
+            </div>
+
+            <div class="form-group">
+                <label>Joining Date</label>
+                {{ form.joining_date }}
+            </div>
+
+            <div class="form-group">
+                <label>Ending Date</label>
+                {{ form.ending_date }}
+            </div>
+        </div>
+
+        <!-- ================= ACTIONS ================= -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Register Employee
+            </button>
+            <a href="{% url 'admin_home' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+Leave Approvals | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Leave Approvals</h1>
+    <span class="badge">
+        Approver View
+    </span>
+</div>
+
+<p class="subtitle">
+    Review and take action on leave requests submitted by your direct reports.
+    Approval follows a single-level hierarchy.
+</p>
+
+<!-- ================= LEAVE APPROVAL CARDS ================= -->
+{% if approvals %}
+<div class="form-grid">
+
+    {% for leave in approvals %}
+    <div class="card leave-card">
+
+        <!-- ===== HEADER ===== -->
+        <div class="leave-header">
+            <h3>{{ leave.employee.employee_name }}</h3>
+            <span class="status status-submitted">
+                {{ leave.leave_type }}
+            </span>
+        </div>
+
+        <!-- ===== META ===== -->
+        <p class="subtitle">
+            {{ leave.employee.employee_id }} •
+            {{ leave.start_date }} → {{ leave.end_date }}
+            ({{ leave.total_days }} day{{ leave.total_days|pluralize }})
+        </p>
+
+        <!-- ===== REASON ===== -->
+        <p>
+            <strong>Reason:</strong><br>
+            {{ leave.reason }}
+        </p>
+
+        <!-- ================= ACTIONS ================= -->
+        <div class="leave-actions">
+
+            <!-- APPROVE -->
+            <form
+                method="post"
+                action="{% url 'process_leave' leave.id 'approve' %}"
+            >
+                {% csrf_token %}
+                <input
+                    type="text"
+                    name="remarks"
+                    placeholder="Remarks (optional)"
+                >
+                <button type="submit" class="btn btn-primary">
+                    Approve
+                </button>
+            </form>
+
+            <!-- REJECT -->
+            <form
+                method="post"
+                action="{% url 'process_leave' leave.id 'reject' %}"
+            >
+                {% csrf_token %}
+                <input
+                    type="text"
+                    name="remarks"
+                    placeholder="Remarks (optional)"
+                >
+                <button type="submit" class="btn btn-danger">
+                    Reject
+                </button>
+            </form>
+
+            <!-- SEND BACK -->
+            <form
+                method="post"
+                action="{% url 'process_leave' leave.id 'send_back' %}"
+            >
+                {% csrf_token %}
+                <input
+                    type="text"
+                    name="remarks"
+                    placeholder="Remarks (optional)"
+                >
+                <button type="submit" class="btn btn-secondary">
+                    Send Back
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+{% else %}
+<p class="subtitle">
+    No pending leave requests.
+</p>
+{% endif %}
+
+{% endblock %}

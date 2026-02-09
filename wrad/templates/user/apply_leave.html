@@ -1,0 +1,131 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+Apply Leave | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Apply Leave</h1>
+    <span class="badge">Request</span>
+</div>
+
+<p class="subtitle">
+    Submit a leave request. Approval follows a single-level reporting hierarchy.
+</p>
+
+<!-- ================= LEAVE FORM ================= -->
+<div class="card">
+
+    <h3>Leave Application</h3>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Submission failed:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Leave Type</label>
+                {{ form.leave_type }}
+            </div>
+
+            <div class="form-group">
+                <label>Start Date</label>
+                {{ form.start_date }}
+            </div>
+
+            <div class="form-group">
+                <label>End Date</label>
+                {{ form.end_date }}
+            </div>
+
+            <!-- ================= PERMISSION TIME ================= -->
+            <div class="form-group permission-time" style="display:none;">
+                <label>Permission Time</label>
+
+                <div class="time-range">
+                    <input type="time" id="permission_from" name="permission_from">
+                    <span class="time-separator">to</span>
+                    <input type="time" id="permission_to" name="permission_to">
+                </div>
+
+                <small class="subtitle">
+                    Max duration: 2 hours (single day only)
+                </small>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Reason</label>
+                {{ form.reason }}
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Submit Leave
+            </button>
+            <a href="{% url 'user_home' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const leaveType = document.querySelector("select[name='leave_type']");
+    const permissionBlock = document.querySelector(".permission-time");
+    const fromTime = document.getElementById("permission_from");
+    const toTime = document.getElementById("permission_to");
+
+    function togglePermission() {
+        if (leaveType.value === "PERMISSION") {
+            permissionBlock.style.display = "block";
+        } else {
+            permissionBlock.style.display = "none";
+            fromTime.value = "";
+            toTime.value = "";
+        }
+    }
+
+    function validateDuration() {
+        if (!fromTime.value || !toTime.value) return;
+
+        const [fh, fm] = fromTime.value.split(":").map(Number);
+        const [th, tm] = toTime.value.split(":").map(Number);
+
+        const diff = (th * 60 + tm) - (fh * 60 + fm);
+
+        if (diff <= 0) {
+            alert("End time must be after start time.");
+            toTime.value = "";
+            return;
+        }
+
+        if (diff > 120) {
+            alert("Permission cannot exceed 2 hours.");
+            toTime.value = "";
+        }
+    }
+
+    leaveType.addEventListener("change", togglePermission);
+    fromTime.addEventListener("change", validateDuration);
+    toTime.addEventListener("change", validateDuration);
+
+    togglePermission();
+});
+</script>
+
+{% endblock %}

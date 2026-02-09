@@ -1,0 +1,151 @@
+/* ================= ADMIN INFO ================= */
+
+.admin-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.admin-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-designation {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.admin-panel-tag {
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+/* ================= DASHBOARD HEADER ================= */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* ================= TABLES ================= */
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.employee-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background-color: #f9fafb;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+}
+
+.employee-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.employee-table tr:hover {
+    background-color: #f9fafb;
+}
+
+/* ================= STATUS LABELS ================= */
+
+.status {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-active {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ================= BUTTONS ================= */
+
+.btn {
+    padding: 7px 16px;
+    font-size: 13px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: #e5e7eb;
+    color: #111827;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.btn-warning {
+    background-color: #f59e0b;
+    color: #ffffff;
+}
+
+.btn:hover {
+    opacity: 0.92;
+}
+
+/* ================= ALERTS ================= */
+
+.alert {
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.alert-error,
+.alert-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ================= UTIL ================= */
+
+.log-date {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6b7280;
+}

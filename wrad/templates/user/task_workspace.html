@@ -1,0 +1,161 @@
+{% extends "layouts/base_user.html" %}
+
+{% block title %}
+Task Workspace | WRAD
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+<div class="dashboard-header">
+    <h1>Task Workspace</h1>
+    <span class="badge">
+        {% if is_assignee %}
+            Assignee
+        {% elif is_assignor %}
+            Assignor
+        {% else %}
+            Viewer
+        {% endif %}
+    </span>
+</div>
+
+<p class="subtitle">
+    View task details, progress, and activity updates.
+</p>
+
+<!-- ================= TASK DETAILS ================= -->
+<div class="card">
+
+    <h3>Task Details</h3>
+
+    <div class="form-grid">
+        <div class="info-block">
+            <span class="label">Title</span>
+            <span class="value strong">
+                {{ task.title }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Assigned By</span>
+            <span class="value">
+                {{ task.assigned_by.employee_name }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Assigned To</span>
+            <span class="value">
+                {{ task.assigned_to.employee_name }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Priority</span>
+            <span class="value">
+                {{ task.priority }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Status</span>
+            <span class="value">
+                {{ task.status }}
+            </span>
+        </div>
+
+        <div class="info-block">
+            <span class="label">Progress</span>
+            <span class="value">
+                {{ task.progress_percent }}%
+            </span>
+        </div>
+
+        <div class="info-block full-width">
+            <span class="label">Description</span>
+            <span class="value">
+                {{ task.description }}
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= ASSIGNEE UPDATE FORM ================= -->
+{% if is_assignee and form %}
+<div class="card">
+
+    <h3>Post Progress Update</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Status</label>
+                {{ form.status }}
+            </div>
+
+            <div class="form-group">
+                <label>Progress (%)</label>
+                {{ form.progress_percent }}
+            </div>
+
+            <div class="form-group full-width">
+                <label>Comment</label>
+                {{ form.comment }}
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Update Task
+            </button>
+            <a href="{% url 'my_tasks' %}" class="btn btn-secondary">
+                Back to My Tasks
+            </a>
+        </div>
+
+    </form>
+
+</div>
+{% endif %}
+
+<!-- ================= ACTIVITY LOG ================= -->
+<div class="card">
+
+    <h3>Activity Log</h3>
+
+    {% if logs %}
+        <ul class="activity-log">
+            {% for log in logs %}
+            <li>
+                <div class="activity-meta">
+                    <strong>{{ log.updated_by.employee_name }}</strong>
+                    <span class="subtitle">
+                        {{ log.created_at|date:"Y-m-d H:i" }}
+                    </span>
+                </div>
+                <div class="activity-content">
+                    Status: {{ log.status }} |
+                    Progress: {{ log.progress_percent }}%
+                    {% if log.comment %}
+                        <br>
+                        Comment: {{ log.comment }}
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="subtitle">
+            No updates posted yet.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

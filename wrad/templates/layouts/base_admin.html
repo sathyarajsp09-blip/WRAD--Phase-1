@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}WRAD – Admin Panel{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Core Design System -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <div class="header-left header-logo">
+    <img src="{% static 'images/icon.png' %}" alt="WRAD Logo">
+    </div>
+
+    <div class="header-right">
+        {% if logged_in_employee %}
+            <span class="user-role">
+                {{ logged_in_employee.designation }}
+            </span>
+        {% endif %}
+        <a href="{% url 'logout' %}" class="logout-link">
+            Logout
+        </a>
+    </div>
+</header>
+
+<!-- ================= LAYOUT ================= -->
+<div class="container">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <h3>Administration</h3>
+        <ul>
+            <li>
+                <a href="{% url 'admin_home' %}">
+                    Dashboard
+                </a>
+            </li>
+        </ul>
+
+        <h3>Employee Management</h3>
+        <ul>
+            <li>
+                <a href="{% url 'register_employee' %}">
+                    Register Employee
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'create_login' %}">
+                    Create Login
+                </a>
+            </li>
+        </ul>
+
+        <h3>Security & Audit</h3>
+        <ul>
+            <li>
+                <a href="{% url 'admin_reset_password' %}">
+                    Reset Password
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'employee_logs' %}">
+                    Employee Logs
+                </a>
+            </li>
+        </ul>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="content">
+
+        <!-- ===== FLASH MESSAGES ===== -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- ===== PAGE CONTENT ===== -->
+        {% block content %}{% endblock %}
+
+    </main>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    © 2026 WRAD. All rights reserved.
+</footer>
+
+</body>
+</html>
